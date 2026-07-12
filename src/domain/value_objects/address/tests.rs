@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use super::*;
 use k256::ecdsa::SigningKey;
 use elliptic_curve::Generate;
