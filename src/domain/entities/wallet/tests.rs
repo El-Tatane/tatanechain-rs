@@ -27,6 +27,15 @@ fn sign_produces_unique_signature_per_message() {
 }
 
 #[test]
+fn sign_is_deterministic() {
+    let wallet = WalletBuilder::new().build();
+
+    let sig1 = wallet.sign(b"same message");
+    let sig2 = wallet.sign(b"same message");
+    assert_eq!(sig1.to_bytes(), sig2.to_bytes());
+}
+
+#[test]
 fn verify_rejects_signature_for_tampered_message() {
     let wallet = WalletBuilder::new().build();
     let signature = wallet.sign(b"correct message");

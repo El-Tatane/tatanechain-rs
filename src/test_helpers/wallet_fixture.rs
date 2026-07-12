@@ -1,12 +1,14 @@
 use crate::domain::entities::wallet::Wallet;
 
+
+#[derive(Default)]
 pub struct WalletBuilder {
     seed: [u8; 32],
 }
 
 impl WalletBuilder {
     pub fn new() -> Self {
-        Self { seed: [0u8; 32] }
+        Self::default()
     }
 
     pub fn with_seed(mut self, seed: [u8; 32]) -> Self {
