@@ -1,6 +1,7 @@
 use k256::{
     SecretKey,
-    ecdsa::{SigningKey, Signature, signature::Signer, signature::Verifier},
+    PublicKey,
+    ecdsa::{SigningKey, VerifyingKey, Signature, signature::Signer, signature::Verifier},
 };
 use elliptic_curve::Generate;
 use rand_chacha::ChaCha20Rng;
@@ -20,11 +21,14 @@ impl Wallet {
         signing_key.sign(message)
     }
 
-    pub fn verify(&self, message: &[u8], signature: &Signature) -> bool {
-        let signing_key = SigningKey::from(&self.secret_key);
-        let result = signing_key.verifying_key().verify(message, signature);
+    pub fn get_public_key(&self) -> PublicKey{
+        self.secret_key.public_key()
+    }
 
-        !result.is_err()
+    pub fn verify(public_key: &PublicKey, message: &[u8], signature: &Signature) -> bool {
+        let verifying_key = VerifyingKey::from(public_key);
+
+        verifying_key.verify(message, signature).is_ok()
     }
 
     pub fn generate() -> Self {

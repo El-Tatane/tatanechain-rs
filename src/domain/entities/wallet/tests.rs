@@ -40,8 +40,9 @@ fn verify_accepts_own_signature() {
     let message = b"correct message";
     let wallet = WalletBuilder::new().build();
     let signature = wallet.sign(message);
+    let public_key = wallet.get_public_key();
 
-    assert!(wallet.verify(message, &signature));
+    assert!(Wallet::verify(&public_key, message, &signature));
 }
 
 #[test]
@@ -51,5 +52,6 @@ fn verify_rejects_signature_from_different_wallet() {
     let other_wallet = WalletBuilder::new().with_seed([9u8; 32]).build();
     let signature = other_wallet.sign(message);
 
-    assert!(!wallet.verify(message, &signature));
+    let public_key = wallet.get_public_key();
+    assert!(!Wallet::verify(&public_key, message, &signature));
 }
