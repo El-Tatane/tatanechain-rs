@@ -3,7 +3,7 @@ use k256::ecdsa::{VerifyingKey, signature::Verifier};
 use crate::test_helpers::wallet_fixture::WalletBuilder;
 
 fn verifying_key(wallet: &Wallet) -> VerifyingKey {
-    SigningKey::from(&wallet.secret_key).verifying_key().clone()
+    wallet.signing_key.verifying_key().clone()
 }
 
 #[test]
@@ -63,4 +63,23 @@ fn verify_rejects_signature_from_different_wallet() {
 
     let public_key = wallet.get_public_key();
     assert!(!Wallet::verify(&public_key, message, &signature));
+}
+
+#[test]
+fn get_address_is_deterministic() {
+    let wallet = WalletBuilder::new().build();
+    assert_eq!(wallet.get_address().as_bytes(), wallet.get_address().as_bytes());
+}
+
+#[test]
+fn get_address_differs_for_different_wallets() {
+    let wallet = WalletBuilder::new().with_seed([1u8; 32]).build();
+    let other_wallet = WalletBuilder::new().with_seed([2u8; 32]).build();
+    assert_ne!(wallet.get_address().as_bytes(), other_wallet.get_address().as_bytes());
+}
+
+#[test]
+fn get_address_is_20_bytes() {
+    let wallet = WalletBuilder::new().build();
+    assert_eq!(wallet.get_address().as_bytes().len(), 20);
 }
