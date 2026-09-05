@@ -1,12 +1,12 @@
-use crate::domain::entities::wallet::Wallet;
+use crate::infrastructure::crypto::k256_wallet::K256Wallet;
 
 
 #[derive(Default)]
-pub struct WalletBuilder {
+pub struct K256WalletBuilder {
     seed: [u8; 32],
 }
 
-impl WalletBuilder {
+impl K256WalletBuilder {
     pub fn new() -> Self {
         Self::default()
     }
@@ -16,7 +16,7 @@ impl WalletBuilder {
         self
     }
 
-    pub fn build(self) -> Wallet {
-        Wallet::from_seed(self.seed)
+    pub fn build(self) -> K256Wallet {
+        K256Wallet::from_seed(self.seed)
     }
 }
