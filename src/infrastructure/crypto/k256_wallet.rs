@@ -60,8 +60,10 @@ impl K256Wallet {
         self.signing_key.to_bytes().into()
     }
 
-    pub fn from_bytes(bytes: [u8; 32]) -> Self {
-        Self::new(SigningKey::from_bytes(&bytes.into()).expect("invalid private key bytes"))
+    pub fn from_bytes(bytes: [u8; 32]) -> Result<Self, k256::ecdsa::Error> {
+        let field_bytes: k256::FieldBytes = bytes.into();
+        let signing_key = SigningKey::from_bytes(&field_bytes)?;
+        Ok(Self::new(signing_key))
     }
 }
 
@@ -156,21 +158,20 @@ mod tests {
     #[test]
     fn from_bytes_to_bytes_roundtrip() {
         let bytes = [1u8; 32];
-        let wallet = K256Wallet::from_bytes(bytes);
+        let wallet = K256Wallet::from_bytes(bytes).unwrap();
 
         assert_eq!(bytes, wallet.to_bytes());
     }
 
     #[test]
-    #[should_panic]
     fn from_bytes_rejects_zero_key() {
-        K256Wallet::from_bytes([0u8; 32]);
+        K256Wallet::from_bytes([0u8; 32]).is_err();
     }
 
     #[test]
     fn to_bytes_from_bytes_roundtrip() {
         let wallet = K256Wallet::generate();
-        let restored = K256Wallet::from_bytes(wallet.to_bytes());
+        let restored = K256Wallet::from_bytes(wallet.to_bytes()).unwrap();
 
         assert_eq!(wallet.to_bytes(), restored.to_bytes());
     }

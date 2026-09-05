@@ -11,3 +11,4 @@ pub struct GeneratedWallet {
 pub trait WalletGenerator {
     fn generate(&self) -> GeneratedWallet;
 }
+
