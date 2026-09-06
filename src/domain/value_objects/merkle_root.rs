@@ -23,7 +23,7 @@ impl MerkleRoot{
                 .map(|pair| {
                     let mut hasher = Sha256::new();
                     hasher.update(pair[0]);
-                    hasher.update(pair.get(1).unwrap_or(&pair[0])); // duplique si impair
+                    hasher.update(pair.get(1).unwrap_or(&pair[0]));
                     hasher.finalize().into()
                 })
                 .collect();
@@ -94,7 +94,7 @@ mod tests {
     fn odd_count_duplicates_last_leaf() {
         let (a, b, c) = (tid(1), tid(2), tid(3));
         let ab = pair(a.as_bytes(), b.as_bytes());
-        let cc = pair(c.as_bytes(), c.as_bytes()); // c dupliqué
+        let cc = pair(c.as_bytes(), c.as_bytes());
         let expected = pair(&ab, &cc);
         let root = MerkleRoot::from_transaction_ids(&[a, b, c]);
         assert_eq!(root.as_bytes(), &expected);
@@ -136,8 +136,6 @@ mod tests {
             "f632ed650b4b2c467228719df716e74232b7293f997e481489bd172e73473a77"
         );
     }
-
-    // --- Propriétés ---
 
     #[test]
     fn is_deterministic() {
