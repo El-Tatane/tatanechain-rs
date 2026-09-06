@@ -1,6 +1,6 @@
+use crate::domain::entities::unsigned_transaction::UnsignedTransaction;
 use crate::domain::value_objects::public_key::PublicKey;
 use crate::domain::value_objects::signature::Signature;
-use crate::domain::value_objects::unsigned_transaction::UnsignedTransaction;
 
 pub struct SignedTransaction {
     pub payload: UnsignedTransaction,

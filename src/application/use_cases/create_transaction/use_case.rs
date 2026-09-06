@@ -1,8 +1,8 @@
 use crate::application::services::transaction_signer::TransactionSigner;
-use crate::application::services::wallet_importer::{WalletImporter};
-use crate::application::use_cases::create_transaction::{CreateTransactionRequest as Request, CreateTransactionResponse as Response};
+use crate::application::services::wallet_importer::WalletImporter;
 use crate::application::use_cases::create_transaction::errors::CreateTransactionError;
-use crate::domain::value_objects::unsigned_transaction::UnsignedTransaction;
+use crate::application::use_cases::create_transaction::{CreateTransactionRequest as Request, CreateTransactionResponse as Response};
+use crate::domain::entities::unsigned_transaction::UnsignedTransaction;
 
 
 pub struct CreateTransactionUseCase<I: WalletImporter, S: TransactionSigner>{
