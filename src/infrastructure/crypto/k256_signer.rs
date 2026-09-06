@@ -40,3 +40,27 @@ impl TransactionVerifier for K256Signer {
             .map_err(|_| VerifyError::InvalidSignature)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::application::services::wallet_generator::WalletGenerator;
+    use crate::infrastructure::crypto::k256_wallet_factory::K256WalletFactory;
+    use super::*;
+
+    #[test]
+    fn sign_then_verify_roundtrip() {
+        let signer = K256Signer;
+        let factory = K256WalletFactory;
+        let wallet = factory.generate();
+        let digest = [42u8; 32];
+
+        let sig = signer.sign(&wallet.private_key, &digest).unwrap();
+        assert!(signer.verify(&wallet.public_key, &digest, &sig).is_ok());
+
+        let other_digest = [43u8; 32];
+        assert_eq!(
+            signer.verify(&wallet.public_key, &other_digest, &sig),
+            Err(VerifyError::InvalidSignature)
+        );
+    }
+}
