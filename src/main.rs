@@ -10,7 +10,7 @@ use crate::application::use_cases::create_transaction::CreateTransactionRequest;
 use crate::application::use_cases::create_transaction::use_case::CreateTransactionUseCase;
 use crate::domain::value_objects::address::Address;
 use crate::domain::value_objects::public_key::PublicKey;
-use crate::infrastructure::crypto::k256Signer::K256Signer;
+use crate::infrastructure::crypto::k256_signer::K256Signer;
 
 #[cfg(test)]
 mod test_helpers;
