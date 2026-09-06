@@ -10,7 +10,7 @@ pub struct FakeImporter {
 }
 
 impl WalletImporter for FakeImporter {
-    fn import(&self, _private_key: PrivateKey) -> Result<ImportedWallet, ImportWalletError> {
+    fn import(&self, _private_key: &PrivateKey) -> Result<ImportedWallet, ImportWalletError> {
         if self.should_fail {
             return Err(ImportWalletError::InvalidPrivateKey);
         }

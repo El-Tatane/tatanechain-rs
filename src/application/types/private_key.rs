@@ -1,6 +1,8 @@
 use std::fmt;
 
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct PrivateKey([u8; 32]);
+
 
 impl PrivateKey {
     pub fn new(bytes: [u8; 32]) -> Self {

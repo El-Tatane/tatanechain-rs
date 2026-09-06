@@ -10,7 +10,7 @@ pub struct ImportedWallet{
 }
 
 pub trait WalletImporter {
-    fn import(&self, private_key: PrivateKey) -> Result<ImportedWallet, ImportWalletError>;
+    fn import(&self, private_key: &PrivateKey) -> Result<ImportedWallet, ImportWalletError>;
 }
 
 #[derive(Debug, PartialEq)]

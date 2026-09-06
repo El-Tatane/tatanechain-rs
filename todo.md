@@ -1,13 +1,10 @@
 # Wallet (gestion des clés)
 - [X] GenerateWallet — crée une nouvelle paire de clés
-- [ ] ImportWalletFromPrivateKey — reconstruit un wallet depuis une clé privée brute (32 octets hex)
+- [X] ImportWalletFromPrivateKey — reconstruit un wallet depuis une clé privée brute (32 octets hex)
 - [ ] ImportWalletFromMnemonic — reconstruit un wallet depuis une phrase mnémonique BIP-39 (12/24 mots → seed → clé)
 
-- [ ] SignTransaction — signe un payload avec la clé privée du wallet
-- [ ] GetAddress — dérive l'adresse depuis la clé publique
-
 # Transaction (côté utilisateur/client)
-- [ ] CreateTransaction — construit une tx non signée à partir de (sender, recipient, amount, nonce)
+- [X] CreateTransaction — construit une tx signée à partir de (sender, recipient, amount, nonce)
 - [ ] SubmitTransaction — point d'entrée public : valide crypto + règles métier, ajoute au mempool, broadcast
 - [ ] GetTransactionStatus — cherche une tx par hash (pending dans le mempool, confirmée dans un block, inconnue)
 

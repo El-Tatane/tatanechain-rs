@@ -17,7 +17,7 @@ impl WalletGenerator for K256WalletFactory {
 }
 
 impl WalletImporter for K256WalletFactory {
-    fn import(&self, private_key: PrivateKey) -> Result<ImportedWallet, ImportWalletError> {
+    fn import(&self, private_key: &PrivateKey) -> Result<ImportedWallet, ImportWalletError> {
         let wallet = K256Wallet::from_bytes(*private_key.reveal())
             .map_err(|_| ImportWalletError::InvalidPrivateKey)?;
 

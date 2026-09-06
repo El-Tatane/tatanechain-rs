@@ -11,7 +11,7 @@ impl<I: WalletImporter> ImportWalletFromPrivateKeyUseCase<I>{
     }
 
     pub fn execute(&self, request: Request)-> Result<Response, ImportWalletError>{
-        let imported = self.importer.import(request.private_key)?;
+        let imported = self.importer.import(&request.private_key)?;
 
         Ok(Response{
             address: imported.address,
